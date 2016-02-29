@@ -14,11 +14,13 @@ A live chat to get help and discuss mirror related issues: https://gitter.im/eva
 
 ### Getting Started
 #### Hardware Components
-- Raspberry Pi 2
+- Raspberry Pi 2**
 - USB Microphone (Or Webcam w/ microphone)
 - Monitor (with the bezel removed)
 - Mirror Pane (aka Observation Glass)
 - Philips Hue
+
+** Also compatible with other Linux, Windows, and OSX devices. See the `cordova` branch for Android and iOS compatibility.
 
 #### Installation
 In order to get started I suggest a clean install of Raspbian. You can snag a fresh copy of Jessie (recommended, it's the future) or Wheezy from the [Raspbian Download Page](https://www.raspberrypi.org/downloads/raspbian/).
@@ -42,17 +44,42 @@ git clone https://github.com/evancohen/smart-mirror.git
 ```
 
 ##### Configuring the mirror
-You'll need to fill in two things into `js/config.js`:
-
-1. A [Forecast API key](https://developer.forecast.io/) (don't worry it's free)
-2. Philips Hue Bridge IP address with a configured user. Details about how to set this up in the [Philips Hue Developer Documentation](http://www.developers.meethue.com/documentation/getting-started)
-
-The format of your config should look something like this:
+You'll need to fill in a few things into `config.js`, which should end up looking something like this:
+``` javascript
+var config = {
+    lenguage : "en",
+    greeting : ["Hi, sexy!", "Hey There!", "Looking Awesome!"],
+    forcast : {
+        key : "a6s5dg39j78qj38sjs91je9djadfa1e",
+        units : "auto"
+    },
+    hue : {
+        ip : "192.168.1.99",
+        uername : "as9234ho0dfhoq01f2as3yh4m0",
+        group : "0",
+    },
+    calendar: {
+      icals : ["https://calendar.google.com/calendar/ical/SOMESTUFF/basic.ics",
+"https://outlook.office365.com/owa/calendar/SOMESTUFF/reachcalendar.ics"],
+      maxResults: 9,
+      maxDays: 365
+    },
+    giphy: {
+      key : "a6s5dg39j78qj38sjs91je9djadfa1e"
+    },
+    traffic: {
+      key : "a6s5dg39j78qj38sjs91je9djadfa1e",
+      mode : "Driving",
+      origin : "350 5th Ave, New York, NY 10118",
+      destination : "1 Dr Carlton B Goodlett Pl, San Francisco, CA 94102",
+      name : "work",
+      reload_interval : 5
+    }
+}
 ```
-var FORCAST_API_KEY = "a6s5dg39j78qj38sjs91je9djadfa1e";
-var HUE_BASE = "http://192.168.1.99/api/as9234ho0dfhoq01f2as3yh4m0/";
-```
-##### Configuring the pi
+Note that if you start the mirror and get a black screen you most likeley have an issue with your config.
+
+##### Configuring the Pi
 In order to rotate your monitor you'll need to add the following line to `/boot/config.txt`
 ```
 display_rotate=1
